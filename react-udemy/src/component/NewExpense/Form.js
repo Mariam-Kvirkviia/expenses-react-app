@@ -25,6 +25,9 @@ let Form = (props) => {
     setTitle("");
     setDate("");
   };
+  function changeForm() {
+    props.onChangeForm(false);
+  }
   return (
     <form onSubmit={submitForm}>
       <div className="new-expense__controls">
@@ -54,7 +57,12 @@ let Form = (props) => {
         </div>
       </div>
       <div className="new-expense__actions">
-        <button type="submit">Add expense</button>
+        <button type="button" onClick={changeForm}>
+          Cancel{" "}
+        </button>
+        <button type="submit" >
+          Add expense
+        </button>
       </div>
     </form>
   );

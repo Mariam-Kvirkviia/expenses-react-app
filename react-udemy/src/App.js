@@ -1,7 +1,7 @@
 import AllExpenses from "./component/expenses/AllExpenses.js";
 import NewExpense from "./component/NewExpense/NewExpense.js";
-
-function App(props) {
+import { useState } from "react";
+function App() {
   const expenses = [
     {
       id: "e1",
@@ -23,13 +23,16 @@ function App(props) {
       date: new Date(2021, 5, 12),
     },
   ];
+  let [addExpense, setAddExpense] = useState(expenses);
   let onDate = (expense) => {
-    console.log(expense);
+    setAddExpense((prevExpense) => {
+      return [expense, ...prevExpense];
+    });
   };
   return (
     <div className="App">
       <NewExpense onDate={onDate} />
-      <AllExpenses expenses={expenses} />
+      <AllExpenses expenses={addExpense} />
     </div>
   );
 }
