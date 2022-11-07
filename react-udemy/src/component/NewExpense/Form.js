@@ -15,15 +15,23 @@ let Form = (props) => {
   };
   let submitForm = (event) => {
     event.preventDefault();
-    let inputsData = {
-      title: enteredTitle,
-      amount: enteredAmount,
-      date: new Date(enteredDate),
-    };
-    props.onSaveData(inputsData);
-    setAmount("");
-    setTitle("");
-    setDate("");
+    if (
+      enteredAmount.trim().length > 0 &&
+      enteredDate.trim().length > 0 &&
+      enteredTitle.trim().length > 0
+    ) {
+      let inputsData = {
+        title: enteredTitle,
+        amount: enteredAmount,
+        date: new Date(enteredDate),
+      };
+      props.onSaveData(inputsData);
+      setAmount("");
+      setTitle("");
+      setDate("");
+    } else {
+      alert("please enter something or click cancel!");
+    }
   };
   function changeForm() {
     props.onChangeForm(false);
@@ -47,22 +55,14 @@ let Form = (props) => {
         </div>
         <div className="new-expense__control">
           <label>Date</label>
-          <input
-            type="date"
-            min="2019-01-01"
-            max="2022-09-25"
-            value={enteredDate}
-            onChange={dateChange}
-          />
+          <input type="date" value={enteredDate} onChange={dateChange} />
         </div>
       </div>
       <div className="new-expense__actions">
         <button type="button" onClick={changeForm}>
-          Cancel{" "}
+          Cancel
         </button>
-        <button type="submit" >
-          Add expense
-        </button>
+        <button>Add expense</button>
       </div>
     </form>
   );

@@ -1,7 +1,9 @@
 import "./NewExpense.css";
 import Form from "./Form.js";
-import { useState } from "react";
-let NewExpense = (props) => {
+import { useState, useContext } from "react";
+import Context from "../../Context";
+let NewExpense = () => {
+  let contextData = useContext(Context);
   let [stylingForm, setStylingForm] = useState(false);
   function changeForm1() {
     setStylingForm(true);
@@ -15,7 +17,7 @@ let NewExpense = (props) => {
       id: Math.random().toString(),
     };
 
-    props.onDate(expensesData);
+    contextData.DataF(expensesData);
     setStylingForm(false);
   };
 

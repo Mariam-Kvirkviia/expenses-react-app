@@ -1,22 +1,30 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ExpensesFilter from "../NewExpense/ExpensesFilter.js";
 import Card from "../Card.js";
 import RenderingExpense from "./RenderingExpense.js";
+import ExpensesChart from "./ExpensesChart.js";
 import "./RenderingExpense.css";
-function AllExpenses(props) {
-  let [year, setYear] = useState("2020");
+import Context from "../../Context";
+function AllExpenses() {
+  let [filteredExpenses, setFilter] = useState("");
+  let ctx = useContext(Context);
+
   let changeYear = (e) => {
-    setYear(e);
+    setFilter(
+      ctx.expenses.filter((el) => el.date.getFullYear().toString() === e)
+    );
   };
-  let filteredExpenses = props.expenses.filter(
-    (el) => el.date.getFullYear().toString() === year
-  );
 
   return (
     <div>
       <Card className="expenses">
-        <ExpensesFilter selectedYear={year} onChangeYear={changeYear} />
-        <RenderingExpense list={filteredExpenses} />
+        <ExpensesFilter onChangeYear={changeYear} />
+        <ExpensesChart
+          expenses={filteredExpenses  ? filteredExpenses : ctx.expenses}
+        />
+        <RenderingExpense
+          list={filteredExpenses ? filteredExpenses : ctx.expenses}
+        />
       </Card>
     </div>
   );
