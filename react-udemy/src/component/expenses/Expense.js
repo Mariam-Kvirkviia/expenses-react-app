@@ -17,13 +17,19 @@ function Expense(props) {
   };
 
   return (
-    <div onClick={handleDelete}>
+    <div>
       <Card className="expense-item">
-        <Date date={props.date} />
-        <div className="expense-item__description">
-          <h2>{props.title}</h2>
-          <div className="expense-item__price">{props.amount}</div>
+        <div className="expense-item ">
+          <Date date={props.date} />
+          <div className="expense-item__description">
+            <h2>{props.title}</h2>
+            <div className="expense-date ">{props.amount}</div>
+          </div>
         </div>
+
+        <button onClick={handleDelete} className="button">
+          Delete
+        </button>
       </Card>
     </div>
   );

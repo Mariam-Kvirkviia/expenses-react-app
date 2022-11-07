@@ -15,7 +15,11 @@ let NewExpense = () => {
 
   return (
     <div className="new-expense">
-      {!stylingForm && <button onClick={changeForm1}>Add new expense</button>}
+      {!stylingForm && (
+        <button onClick={changeForm1} className="button">
+          Add new expense
+        </button>
+      )}
 
       {stylingForm && (
         <Form onSaveData={saveExpensesData} onChangeForm={changeForm2} />

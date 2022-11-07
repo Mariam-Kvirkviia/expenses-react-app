@@ -62,10 +62,10 @@ let Form = (props) => {
         </div>
       </div>
       <div className="new-expense__actions">
-        <button type="button" onClick={changeForm}>
+        <button type="button" onClick={changeForm} className="button">
           Cancel
         </button>
-        <button>Add expense</button>
+        <button className="button">Add expense</button>
       </div>
     </form>
   );
