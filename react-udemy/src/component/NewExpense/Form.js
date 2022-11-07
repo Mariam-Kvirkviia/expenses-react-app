@@ -1,6 +1,8 @@
 import "./NewExpense.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import Context from "../../Context";
 let Form = (props) => {
+  let ctx = useContext(Context);
   let [enteredTitle, setTitle] = useState("");
   let [enteredAmount, setAmount] = useState("");
   let [enteredDate, setDate] = useState("");
@@ -25,7 +27,8 @@ let Form = (props) => {
         amount: enteredAmount,
         date: new Date(enteredDate),
       };
-      props.onSaveData(inputsData);
+      ctx.DataF(inputsData);
+      ctx.reFetch(Math.random());
       setAmount("");
       setTitle("");
       setDate("");

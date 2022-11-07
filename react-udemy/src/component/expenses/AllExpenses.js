@@ -20,7 +20,7 @@ function AllExpenses() {
       <Card className="expenses">
         <ExpensesFilter onChangeYear={changeYear} />
         <ExpensesChart
-          expenses={filteredExpenses  ? filteredExpenses : ctx.expenses}
+          expenses={filteredExpenses ? filteredExpenses : ctx.expenses}
         />
         <RenderingExpense
           list={filteredExpenses ? filteredExpenses : ctx.expenses}

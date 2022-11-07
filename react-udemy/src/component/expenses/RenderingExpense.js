@@ -6,8 +6,14 @@ let RenderingExpense = (props) => {
     <h2 className="expenses-list__fallback">Expenses not found</h2>
   );
   if (props.list.length > 0) {
-    expenseContent = props.list.map((el, index) => (
-      <Expense title={el.title} amount={el.amount} date={el.date} key={index} />
+    expenseContent = props.list.map((el) => (
+      <Expense
+        title={el.title}
+        amount={el.amount}
+        date={el.date}
+        key={el.id}
+        id={el.id}
+      />
     ));
   }
   return expenseContent;
