@@ -1,13 +1,14 @@
-import { useState, useEffect, useRef } from "react";
-
+import { useState, useEffect, useRef, useContext } from "react";
+import Context from "../../Context";
 import classes from "./AuthForm.module.css";
-
+import { useHistory } from "react-router-dom";
 const AuthForm = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  let { isLogin, set, login, setId } = useContext(Context);
+  let history = useHistory();
   let emailRef = useRef();
   let passwordRef = useRef();
   const switchAuthModeHandler = () => {
-    setIsLogin((prevState) => !prevState);
+    set((prevState) => !prevState);
   };
   let handleSubmit = (event) => {
     event.preventDefault();
@@ -28,6 +29,11 @@ const AuthForm = () => {
       )
         .then((response) => {
           if (response.ok) {
+            return response.json().then((data) => {
+              login(data.idToken);
+              setId(emailRef.current.value);
+              history.replace("/home");
+            });
           } else {
             return response.json().then((data) => {
               throw new Error(data?.error?.message || "something went wrong!");
