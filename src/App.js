@@ -7,8 +7,9 @@ function App() {
 
   let [addExpense, setAddExpense] = useState("");
   useEffect(() => {
-    console.log("effect");
-    fetch("https://react1-9a97e-default-rtdb.firebaseio.com/expenses.json")
+    fetch(
+      "https://react-projects-160bb-default-rtdb.firebaseio.com/expenses.json"
+    )
       .then((response) => response.json())
       .then((data) => {
         let fetchedData = [];
@@ -27,10 +28,13 @@ function App() {
   }, [fetching]);
 
   let onDate = (expense) => {
-    fetch("https://react1-9a97e-default-rtdb.firebaseio.com/expenses.json", {
-      method: "POST",
-      body: JSON.stringify(expense),
-    });
+    fetch(
+      "https://react-projects-160bb-default-rtdb.firebaseio.com/expenses.json",
+      {
+        method: "POST",
+        body: JSON.stringify(expense),
+      }
+    );
   };
   return (
     <Context.Provider

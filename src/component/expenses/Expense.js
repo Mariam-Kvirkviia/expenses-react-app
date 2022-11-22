@@ -9,7 +9,7 @@ function Expense(props) {
   let ctx = useContext(Context);
   let handleDelete = () => {
     fetch(
-      `https://react1-9a97e-default-rtdb.firebaseio.com/expenses/${props.id}.json`,
+      `https://react-projects-160bb-default-rtdb.firebaseio.com/expenses/${props.id}.json`,
       { method: "DELETE" }
     ).then((response) => {
       ctx.reFetch(Math.random());
