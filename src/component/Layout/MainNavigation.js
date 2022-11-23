@@ -8,8 +8,8 @@ const MainNavigation = () => {
   let history = useHistory();
   let handleLogout = () => {
     logout();
-    history.replace("/auth");
   };
+  let token = localStorage.getItem("token");
   return (
     <header className={classes.header}>
       <Link to="/">
@@ -17,22 +17,17 @@ const MainNavigation = () => {
       </Link>
       <nav>
         <ul>
-          {!userLoggedIn && (
-            <li>
-              <Link to="/auth">Login</Link>
-            </li>
-          )}
-          {userLoggedIn && (
+          {token && (
             <li>
               <Link to="/profile">Profile</Link>
             </li>
           )}
-          {userLoggedIn && (
+          {token && (
             <li>
               <Link to="/expenses">Expenses</Link>
             </li>
           )}
-          {userLoggedIn && (
+          {token && (
             <li>
               <button onClick={handleLogout}>Logout</button>
             </li>

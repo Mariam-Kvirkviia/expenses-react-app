@@ -5,6 +5,7 @@ const ExpensesFilter = (props) => {
   let handleSubmit = (e) => {
     e.preventDefault();
     props.onChangeYear(year);
+    setYear("");
   };
   let onChange = (e) => {
     setYear(e.target.value);

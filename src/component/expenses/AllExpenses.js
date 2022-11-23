@@ -13,6 +13,9 @@ function AllExpenses() {
     setFilter(
       ctx.expenses.filter((el) => el.date.getFullYear().toString() === e)
     );
+    if (e === "") {
+      setFilter(ctx.expenses);
+    }
   };
 
   return (

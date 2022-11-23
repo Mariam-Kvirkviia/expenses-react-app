@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useRef, useContext } from "react";
 import Context from "../../Context";
 import classes from "./AuthForm.module.css";
 import { useHistory } from "react-router-dom";
 const AuthForm = () => {
-  let { isLogin, set, login, setId } = useContext(Context);
+  let { isLogin, set, login } = useContext(Context);
   let history = useHistory();
   let emailRef = useRef();
   let passwordRef = useRef();
@@ -31,8 +31,9 @@ const AuthForm = () => {
           if (response.ok) {
             return response.json().then((data) => {
               login(data.idToken);
-              setId(emailRef.current.value);
-              history.replace("/home");
+
+              localStorage.setItem("id", enteredEmail.split(".").join(""));
+              history.replace("/expenses");
             });
           } else {
             return response.json().then((data) => {
@@ -58,6 +59,7 @@ const AuthForm = () => {
       )
         .then((response) => {
           if (response.ok) {
+            history.replace("/expenses");
           } else {
             return response.json().then((data) => {
               throw new Error(data?.error?.message || "something went wrong!");

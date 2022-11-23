@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import Context from "./Context";
-import { Route } from "react-router-dom";
+import { Route, Redirect, useHistory } from "react-router-dom";
 import AuthPage from "./pages/AuthPage.js";
-import HomePage from "./pages/HomePage.js";
 import ProfilePage from "./pages/ProfilePage.js";
 import ExpensesPage from "./pages/ExpensesPage.js";
 import Layout from "./component/Layout/Layout.js";
@@ -12,15 +11,13 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   let [addExpense, setAddExpense] = useState("");
   let [token, setToken] = useState("");
-  let [id, setId] = useState("");
   let userLoggedIn = !!token;
-
+  let idStorage = localStorage.getItem("id");
+  let history = useHistory();
   useEffect(() => {
-    if (id) {
+    if (idStorage) {
       fetch(
-        `https://react-projects-160bb-default-rtdb.firebaseio.com/expenses/${id
-          .split(".")
-          .join("")}.json`
+        `https://react-projects-160bb-default-rtdb.firebaseio.com/expenses/${idStorage}.json`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -38,26 +35,28 @@ function App() {
           setAddExpense(fetchedData);
         });
     }
-  }, [fetching, id]);
+  }, [fetching, idStorage]);
 
   let onDate = (expense) => {
     //if id
 
     fetch(
-      `https://react-projects-160bb-default-rtdb.firebaseio.com/expenses/${id
-        .split(".")
-        .join("")}.json`,
+      `https://react-projects-160bb-default-rtdb.firebaseio.com/expenses/${idStorage}.json`,
       {
         method: "POST",
         body: JSON.stringify(expense),
       }
     );
   };
+
   let handleLogging = (token) => {
     setToken(token);
+    localStorage.setItem("token", token);
   };
   let handleOut = () => {
     setToken(null);
+    localStorage.clear();
+    history.replace("/auth");
   };
 
   return (
@@ -67,35 +66,43 @@ function App() {
         DataF: onDate,
         expenses: addExpense,
         reFetch: setFetch,
-        token,
         set: setIsLogin,
         isLogin: isLogin,
-        userLoggedIn,
         login: handleLogging,
         logout: handleOut,
-        setId,
-        id,
       }}
     >
       <Layout>
         <Switch>
-          <Route path="/auth" exact>
-            <AuthPage />
+          <Route path="/" exact>
+            <Redirect to="/auth" />
           </Route>
-          <Route path="/home" exact>
-            <HomePage />
+          <Route path="/auth" exact>
+            {userLoggedIn ? <Redirect to="/expenses" /> : <AuthPage />}
           </Route>
           <Route path="/profile">
-            <ProfilePage />
+            {localStorage.getItem("token") ? (
+              <ProfilePage />
+            ) : (
+              <Redirect to="/auth" />
+            )}
           </Route>
           <Route path="/expenses">
-            <ExpensesPage />
+            {localStorage.getItem("token") ? (
+              <ExpensesPage />
+            ) : (
+              <Redirect to="/auth" />
+            )}
+          </Route>
+          <Route path="*">
+            <Redirect to="/auth" />
           </Route>
         </Switch>
       </Layout>
     </Context.Provider>
   );
 }
+/**{userLoggedIn ? <ExpensesPage /> : <AuthPage />} */
 
 export default App;
 /** <Context.Provider

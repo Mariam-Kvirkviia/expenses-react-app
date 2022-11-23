@@ -6,13 +6,11 @@ import Date from "./Date.js";
 import "../Card.css";
 
 function Expense(props) {
-  let { reFetch, id } = useContext(Context);
-
+  let { reFetch } = useContext(Context);
+  let id = localStorage.getItem("id");
   let handleDelete = () => {
     fetch(
-      `https://react-projects-160bb-default-rtdb.firebaseio.com/expenses/${id
-        .split(".")
-        .join("")}/${props.id}.json`,
+      `https://react-projects-160bb-default-rtdb.firebaseio.com/expenses/${id}/${props.id}.json`,
       { method: "DELETE" }
     ).then((response) => {
       reFetch(Math.random());
