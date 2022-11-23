@@ -1,11 +1,11 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useContext } from "react";
 import classes from "./MainNavigation.module.css";
 import Context from "../../Context";
 
 const MainNavigation = () => {
-  let { userLoggedIn, logout } = useContext(Context);
-  let history = useHistory();
+  let { logout } = useContext(Context);
+
   let handleLogout = () => {
     logout();
   };
