@@ -76,6 +76,8 @@ const AuthForm = () => {
           console.error(err);
         });
     }
+    emailRef.current.value = "";
+    passwordRef.current.value = "";
   };
   return (
     <section className={classes.auth}>

@@ -12,7 +12,6 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   let [addExpense, setAddExpense] = useState("");
   let [token, setToken] = useState("");
-  let userLoggedIn = !!token;
   let idStorage = localStorage.getItem("id");
   let history = useHistory();
   useEffect(() => {
@@ -70,11 +69,11 @@ function App() {
         set: setIsLogin,
         isLogin: isLogin,
         login: handleLogging,
+        token,
         logout: handleOut,
       }}
     >
       <Layout>
-      
         <Switch>
           <Route path="/" exact>
             <Redirect to="/auth" />
