@@ -1,9 +1,12 @@
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState } from "react";
 import Context from "../../Context";
 import classes from "./AuthForm.module.css";
 import { useHistory } from "react-router-dom";
+import Modal from "../../Modal";
+
 const AuthForm = () => {
   let { isLogin, set, login } = useContext(Context);
+  let [isError, setError] = useState("");
   let history = useHistory();
   let emailRef = useRef();
   let passwordRef = useRef();
@@ -37,12 +40,13 @@ const AuthForm = () => {
             });
           } else {
             return response.json().then((data) => {
+              setError(data?.error?.message);
               throw new Error(data?.error?.message || "something went wrong!");
             });
           }
         })
         .catch((err) => {
-          alert(err);
+          console.error(err);
         });
     } else {
       fetch(
@@ -63,17 +67,19 @@ const AuthForm = () => {
             set((prevState) => !prevState);
           } else {
             return response.json().then((data) => {
+              setError(data?.error?.message);
               throw new Error(data?.error?.message || "something went wrong!");
             });
           }
         })
         .catch((err) => {
-          alert(err);
+          console.error(err);
         });
     }
   };
   return (
     <section className={classes.auth}>
+      {isError && <Modal onSetError={setError} message={isError} />}
       <h1>{isLogin ? "Login" : "Sign Up"}</h1>
       <form onSubmit={handleSubmit}>
         <div className={classes.control}>

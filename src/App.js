@@ -6,6 +6,7 @@ import ProfilePage from "./pages/ProfilePage.js";
 import ExpensesPage from "./pages/ExpensesPage.js";
 import Layout from "./component/Layout/Layout.js";
 import { Switch } from "react-router-dom/cjs/react-router-dom.min.js";
+
 function App() {
   let [fetching, setFetch] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
@@ -73,6 +74,7 @@ function App() {
       }}
     >
       <Layout>
+      
         <Switch>
           <Route path="/" exact>
             <Redirect to="/auth" />
