@@ -78,7 +78,11 @@ function App() {
             <Redirect to="/auth" />
           </Route>
           <Route path="/auth" exact>
-            {userLoggedIn ? <Redirect to="/expenses" /> : <AuthPage />}
+            {localStorage.getItem("token") ? (
+              <Redirect to="/expenses" />
+            ) : (
+              <AuthPage />
+            )}
           </Route>
           <Route path="/profile">
             {localStorage.getItem("token") ? (

@@ -60,6 +60,7 @@ const AuthForm = () => {
         .then((response) => {
           if (response.ok) {
             history.replace("/expenses");
+            set((prevState) => !prevState);
           } else {
             return response.json().then((data) => {
               throw new Error(data?.error?.message || "something went wrong!");
